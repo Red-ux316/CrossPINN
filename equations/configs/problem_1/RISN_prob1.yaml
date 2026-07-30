@@ -1,0 +1,31 @@
+data:
+  problem_id: 1
+  num_quadrature_nodes: 10
+  domain:
+  - 0.0
+  - 1.0
+  num_collocation_points_adam: 500
+  num_collocation_points_lbfgs: 500
+  num_boundary_points_adam: 128
+  num_boundary_points_lbfgs: 64
+  num_quadrature_points: 10
+experiment:
+  seed: 42
+  name: RISN_prob1
+  best_mae: 0.001357272150926292
+model:
+  type: RISN
+  num_blocks: 4
+  activation: Tanh
+  hidden_features: 128
+  output_dim: 1
+training:
+  optimizer: Hybrid
+  learning_rate: 0.0008829969394482139
+  learning_rate_lbfgs: 1.0
+  scheduler: WarmupCosine
+  warmup_epochs: 322
+  epochs: 4000
+  early_stopping_patience: 500
+  early_stopping_min_delta: 1.0e-05
+  weight_decay: 2.811695597372552e-06

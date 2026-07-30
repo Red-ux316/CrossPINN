@@ -1,0 +1,47 @@
+data:
+  problem_id: 24
+  num_quadrature_nodes: 10
+  domain:
+  - 0.0
+  - 1.0
+  num_collocation_points_adam: 500
+  num_collocation_points_lbfgs: 500
+  num_boundary_points_adam: 32
+  num_boundary_points_lbfgs: 64
+  num_quadrature_points: 10
+experiment:
+  seed: 42
+  name: TLP_posEnc_GlobalSkip_prob24
+  best_mae: 5.208622496866155e-06
+model:
+  type: TLP
+  pos_encoder: true
+  pos_encoder_type: rff
+  learn_mem_val: false
+  global_skip: true
+  skip_use_pretrained_mlp: true
+  skip_mlp_trainable: true
+  activation: GELU
+  hidden_features: 64
+  num_heads: 2
+  num_decoder_layers: 3
+  LinNorm: true
+  residual_norm: false
+  num_support_points: 32
+  support_points_distribution: grid
+  beta_penalty: 5.0
+  causal_mask: false
+  siren_omega: 30.0
+  output_dim: 1
+training:
+  warm_start: false
+  warm_start_unfreeze_epoch: 2000
+  warm_start_study_name: null
+  early_stopping_patience: 2500
+  learning_rate: 0.0020324525450741925
+  weight_decay: 1.493244680618969e-05
+  optimizer: AdamW
+  scheduler: WarmupCosine
+  warmup_epochs: 124
+  epochs: 10000
+  early_stopping_min_delta: 1.0e-05

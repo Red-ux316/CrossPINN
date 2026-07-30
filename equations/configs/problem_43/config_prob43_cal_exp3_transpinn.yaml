@@ -1,0 +1,27 @@
+experiment:
+  name: Problem43_TransPINN
+  best_mae: 0.27736860513687134
+data:
+  num_collocation_points_adam: 250
+  num_collocation_points_lbfgs: null
+  num_quadrature_nodes: 5
+  num_boundary_points_adam: 31
+model:
+  type: TransPINN
+  activation: null
+  hidden_features: 32
+  num_encoder_layers: 2
+  num_decoder_layers: 1
+  num_heads: 2
+  num_support_points: 256
+  chebyshev: null
+  causal_mask: null
+training:
+  epochs: null
+  optimizer: null
+  learning_rate: 0.0004945956738948512
+  weight_decay: 8.43266256233296e-05
+  scheduler: null
+  warmup_epochs: 105
+  early_stopping_patience: null
+  early_stopping_min_delta: null

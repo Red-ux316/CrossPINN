@@ -1,0 +1,33 @@
+data:
+  problem_id: 8
+  domain:
+  - - 0.0
+    - 1.0
+  - - 0.0
+    - 2.0
+  num_quadrature_nodes: 5
+  num_collocation_points_adam: 500
+  num_collocation_points_lbfgs: 500
+  num_boundary_points_adam: 32
+  num_boundary_points_lbfgs: 64
+  num_quadrature_points: 5
+experiment:
+  seed: 42
+  name: RISN_prob8
+  best_mae: 0.007219340186566114
+model:
+  type: RISN
+  num_blocks: 6
+  activation: Tanh
+  hidden_features: 128
+  output_dim: 1
+training:
+  learning_rate: 0.0014979696129124572
+  optimizer: AdamW
+  scheduler: WarmupCosine
+  warmup_epochs: 128
+  epochs: 4000
+  early_stopping_patience: 500
+  early_stopping_min_delta: 1.0e-05
+  weight_decay: 2.9114471070181994e-06
+  learning_rate_lbfgs: 1.0

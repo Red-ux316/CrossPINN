@@ -1,0 +1,36 @@
+model:
+  activation: GELU
+  hidden_features: 32
+  num_decoder_layers: 1
+  num_heads: 8
+  num_support_points: 64
+  support_points_distribution: grid
+  beta_penalty: 5.0
+  causal_mask: false
+  use_rff: false
+  rff_sigma: 1.0
+  type: TLP
+training:
+  optimizer: AdamW
+  learning_rate: 0.0003049944374651805
+  weight_decay: 1.5253944050009078e-05
+  scheduler: WarmupCosine
+  warmup_epochs: 110
+  warm_start_unfreeze_epoch: 2000
+  epochs: 4000
+  early_stopping_patience: 500
+  early_stopping_min_delta: 1.0e-05
+data:
+  num_quadrature_nodes: 10
+  num_collocation_points_adam: 500
+  num_collocation_points_lbfgs: 2000
+  num_boundary_points_adam: 62
+  num_boundary_points_lbfgs: 64
+  domain:
+  - 0.0
+  - 1.0
+  problem_id: 42
+experiment:
+  seed: 42
+  best_mae: 0.39384132623672485
+  name: prob42_tlp

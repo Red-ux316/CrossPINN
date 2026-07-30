@@ -1,0 +1,70 @@
+MLP:
+  training:
+    learning_rate: {type: 'float', low: 1.0e-4, high: 5.0e-3, log: true}
+    weight_decay: {type: 'float', low: 1.0e-6, high: 1.0e-4, log: true}
+    warmup_epochs: {type: 'int', low: 0, high: 500}
+  model:
+    hidden_features: {type: 'categorical', choices: [32, 64, 128]}
+    hidden_layers: {type: 'int', low: 1, high: 10}
+  data:
+    num_collocation_points_adam: {type: 'categorical', choices: [250, 500, 1000]}
+    num_boundary_points_adam: {type: 'categorical', choices: [32, 64, 128]} # NOTE: Could be tuned in the future.
+
+RISN:
+  training:
+    learning_rate: {type: 'float', low: 1.0e-4, high: 5.0e-3, log: true}
+    weight_decay: {type: 'float', low: 1.0e-6, high: 1.0e-4, log: true}
+    warmup_epochs: {type: 'int', low: 0, high: 500}
+  model:
+    hidden_features: {type: 'categorical', choices: [32, 64, 128]}
+    num_blocks: {type: 'int', low: 1, high: 10}
+  data:
+    num_collocation_points_adam: {type: 'categorical', choices: [250, 500, 1000]}
+    num_boundary_points_adam: {type: 'categorical', choices: [32, 64, 128]} # NOTE: Could be tuned in the future.
+
+TransPINN:
+  training:
+    learning_rate: {type: 'float', low: 1.0e-4, high: 5.0e-3, log: true}
+    weight_decay: {type: 'float', low: 1.0e-6, high: 1.0e-4, log: true}
+    warmup_epochs: {type: 'int', low: 0, high: 1000}
+  model:
+    activation: {type: 'categorical', choices: ['GELU', 'Tanh', 'SiLU']}
+    pos_encoder_type: {type: 'categorical', choices: ['rff', 'lff', 'mlp', 'siren']} # Exclude 'rbf' for stability
+    siren_omega: {type: 'float', low: 10.0, high: 50.0, condition: {param: 'pos_encoder_type', value: 'siren'}}
+    hidden_features: {type: 'categorical', choices: [32, 64, 128]} #, prune_if: [128]
+    num_heads: {type: 'categorical', choices: [2, 4, 8], constraint: 'hidden_features_modulo'}
+    num_encoder_layers: {type: 'int', low: 1, high: 4}
+    num_decoder_layers: {type: 'int', low: 1, high: 4}
+    num_support_points: {type: 'categorical', choices: [32, 64, 128]}
+    LinNorm: {type: 'categorical', choices: [true, false]}
+    # causal_mask: {type: 'categorical', choices: [true, false]}
+    beta_penalty: {type: 'float', low: 2.0, high: 6.0, condition: {param: 'support_points_distribution', value: 'beta'}}
+  data:
+    num_collocation_points_adam: {type: 'categorical', choices: [250, 500, 1000], prune_if: [1000]}
+    num_boundary_points_adam: {type: 'categorical', choices: [32, 64, 128]}
+
+TLP:
+  training:
+    learning_rate: {type: 'float', low: 5.0e-4, high: 5.0e-2, log: true}
+    weight_decay: {type: 'float', low: 1.0e-6, high: 1.0e-4, log: true}
+    warmup_epochs: {type: 'int', low: 0, high: 1000}
+    warm_start: {type: 'categorical', choices: [true, false]}
+    warm_start_unfreeze_epoch: {type: 'categorical', choices: [2,1000, 2000, 3000], condition: {param: 'warm_start', value: true}}
+  model:
+    activation: {type: 'categorical', choices: ['GELU', 'Tanh', 'SiLU']}
+    pos_encoder_type: {type: 'categorical', choices: ['rff', 'lff', 'mlp', 'siren']} # Removed from tuning as per user request
+    siren_omega: {type: 'float', low: 10.0, high: 50.0, condition: {param: 'pos_encoder_type', value: 'siren'}}
+    hidden_features: {type: 'categorical', choices: [32, 64, 128]} #, prune_if: [128]
+    num_heads: {type: 'categorical', choices: [2, 4, 8], constraint: 'hidden_features_modulo'}
+    num_decoder_layers: {type: 'int', low: 1, high: 4}
+    num_support_points: {type: 'categorical', choices: [32, 64, 128]}
+    LinNorm: {type: 'categorical', choices: [true, false]}
+    global_skip: {type: 'categorical', choices: [true, false]}
+    skip_use_pretrained_mlp: {type: 'categorical', choices: [true, false], condition: {param: 'global_skip', value: true}}
+    skip_mlp_trainable: {type: 'categorical', choices: [true, false], condition: {param: 'skip_use_pretrained_mlp', value: true}} 
+    learn_mem_val: {type: 'categorical', choices: [true, false]}
+    beta_penalty: {type: 'float', low: 2.0, high: 6.0, condition: {param: 'support_points_distribution', value: 'beta'}}
+    #  causal_mask: {type: 'categorical', choices: [true, false]}
+  data:
+    num_collocation_points_adam: {type: 'categorical', choices: [250, 500, 1000], prune_if: [1000]}
+    num_boundary_points_adam: {type: 'categorical', choices: [32, 64, 128]} # NOTE: Could be tuned in the future.

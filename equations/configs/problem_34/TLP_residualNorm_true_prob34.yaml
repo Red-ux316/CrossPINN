@@ -1,0 +1,49 @@
+data:
+  problem_id: 34
+  domain:
+  - - 0.0
+    - 1.0
+  - - 0.0
+    - 1.0
+  num_quadrature_nodes: 5
+  num_collocation_points_adam: 250
+  num_collocation_points_lbfgs: 500
+  num_boundary_points_adam: 32
+  num_boundary_points_lbfgs: 64
+  num_quadrature_points: 5
+experiment:
+  seed: 42
+  name: TLP_residualNorm_true_prob34
+  best_mae: 0.0008723611827008426
+model:
+  type: TLP
+  pos_encoder: true
+  pos_encoder_type: lff
+  learn_mem_val: true
+  global_skip: true
+  skip_use_pretrained_mlp: false
+  skip_mlp_trainable: true
+  activation: SiLU
+  hidden_features: 64
+  num_heads: 4
+  num_decoder_layers: 3
+  LinNorm: true
+  residual_norm: true
+  num_support_points: 64
+  support_points_distribution: grid
+  beta_penalty: 5.0
+  causal_mask: false
+  siren_omega: 30.0
+  output_dim: 1
+training:
+  warm_start: true
+  warm_start_unfreeze_epoch: 2000
+  warm_start_study_name: null
+  early_stopping_patience: 2500
+  learning_rate: 0.003513008359329218
+  weight_decay: 1.180583480208042e-05
+  optimizer: AdamW
+  scheduler: WarmupCosine
+  warmup_epochs: 901
+  epochs: 10000
+  early_stopping_min_delta: 1.0e-05

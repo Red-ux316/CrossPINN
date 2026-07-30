@@ -1,0 +1,12 @@
+data:
+  problem_id: 19
+  domain:
+  - 0.0
+  - 1.0
+  num_quadrature_nodes: 10
+  num_collocation_points_adam: 500
+  num_collocation_points_lbfgs: 500
+  num_boundary_points_adam: 2
+  num_boundary_points_lbfgs: 2
+model:
+  output_dim: 2

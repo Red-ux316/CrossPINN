@@ -1,0 +1,41 @@
+data:
+  domain:
+  - 0.0
+  - 1.0
+  problem_id: 42
+  num_quadrature_nodes: 10
+  num_collocation_points_adam: 500
+  num_collocation_points_lbfgs: 500
+  num_boundary_points_adam: 64
+  num_boundary_points_lbfgs: 64
+experiment:
+  seed: 42
+  name: TLP_prob42
+  best_mae: 0.001779983751475811
+training:
+  epochs: 4000
+  early_stopping_patience: 2500
+  early_stopping_min_delta: 1.0e-05
+  optimizer: AdamW
+  learning_rate: 0.003210530061432242
+  weight_decay: 1.9368791302656716e-05
+  scheduler: WarmupCosine
+  warmup_epochs: 749
+  warm_start: false
+  warm_start_unfreeze_epoch: 2000
+model:
+  type: TLP
+  activation: GELU
+  pos_encoder_type: mlp
+  hidden_features: 128
+  num_decoder_layers: 4
+  num_heads: 4
+  num_support_points: 64
+  support_points_distribution: grid
+  beta_penalty: 5.0
+  siren_omega: 30.0
+  causal_mask: false
+  LinNorm: true
+  residual_norm: true
+  use_rff: false
+  rff_sigma: 1.0

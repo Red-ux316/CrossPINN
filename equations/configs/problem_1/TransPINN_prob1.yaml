@@ -1,0 +1,38 @@
+data:
+  domain:
+  - 0.0
+  - 1.0
+  problem_id: 1
+  num_quadrature_nodes: 10
+  num_collocation_points_adam: 250
+  num_collocation_points_lbfgs: 500
+  num_boundary_points_adam: 64
+  num_boundary_points_lbfgs: 64
+experiment:
+  seed: 42
+  name: TransPINN_prob1
+  best_mae: 0.09097400307655334
+training:
+  epochs: 4000
+  early_stopping_patience: 500
+  early_stopping_min_delta: 1.0e-05
+  optimizer: AdamW
+  learning_rate: 0.004985027602857449
+  weight_decay: 2.8209687641537623e-06
+  scheduler: WarmupCosine
+  warmup_epochs: 728
+model:
+  type: TransPINN
+  activation: Tanh
+  pos_encoder_type: lff
+  hidden_features: 64
+  num_encoder_layers: 1
+  num_decoder_layers: 2
+  num_heads: 4
+  num_support_points: 32
+  support_points_distribution: beta
+  beta_penalty: 3.8308644394372715
+  siren_omega: 30.0
+  causal_mask: false
+  LinNorm: false
+  residual_norm: false

@@ -1,0 +1,8 @@
+data:
+  domain:
+  - - -1.0
+    - 1.0
+  - - 0.0
+    - 1.0
+  problem_id: 43
+  num_quadrature_nodes: 5

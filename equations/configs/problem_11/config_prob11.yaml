@@ -1,0 +1,10 @@
+data:
+  domain:
+  - - 0.0
+    - 1.0
+  - - 0.0
+    - 1.0
+  problem_id: 11
+  num_quadrature_nodes: 5
+  num_collocation_points_adam: 250
+  num_collocation_points_lbfgs: 500

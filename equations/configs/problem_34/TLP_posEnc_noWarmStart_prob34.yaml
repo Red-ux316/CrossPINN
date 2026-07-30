@@ -1,0 +1,49 @@
+data:
+  problem_id: 34
+  domain:
+  - - 0.0
+    - 1.0
+  - - 0.0
+    - 1.0
+  num_quadrature_nodes: 5
+  num_collocation_points_adam: 500
+  num_collocation_points_lbfgs: 500
+  num_boundary_points_adam: 64
+  num_boundary_points_lbfgs: 64
+  num_quadrature_points: 5
+experiment:
+  seed: 42
+  name: TLP_posEnc_noWarmStart_prob34
+  best_mae: 0.001384029514156282
+model:
+  type: TLP
+  pos_encoder: true
+  pos_encoder_type: siren
+  learn_mem_val: false
+  global_skip: false
+  skip_use_pretrained_mlp: false
+  skip_mlp_trainable: true
+  activation: Tanh
+  hidden_features: 32
+  num_heads: 2
+  num_decoder_layers: 1
+  LinNorm: false
+  residual_norm: false
+  num_support_points: 64
+  support_points_distribution: grid
+  beta_penalty: 5.0
+  causal_mask: false
+  siren_omega: 15.945675072701054
+  output_dim: 1
+training:
+  warm_start: true
+  warm_start_unfreeze_epoch: 2000
+  warm_start_study_name: null
+  early_stopping_patience: 2500
+  learning_rate: 0.0065733767017658205
+  weight_decay: 3.545681373344579e-05
+  optimizer: AdamW
+  scheduler: WarmupCosine
+  warmup_epochs: 820
+  epochs: 4000
+  early_stopping_min_delta: 1.0e-05

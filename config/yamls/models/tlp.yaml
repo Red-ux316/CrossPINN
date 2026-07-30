@@ -1,0 +1,24 @@
+# ==============================================================================
+# TLP (Trans Lite PINN) Specific Configuration
+# ==============================================================================
+model:
+  type: TLP
+
+  # --- Positional Encoder Setup ---
+  pos_encoder: true         # Enable spatial positional encoding (if false, uses simple nn.Linear)
+  pos_encoder_type: 'mlp'   # Spatial encoder: 'rff', 'lff', 'mlp', 'siren', 'rbf'
+
+
+  # --- Support Points & Memory ---
+  learn_mem_val: false                # Direct 2D matrix latent learning [N_sup x H]
+
+  # --- Global Skip Connection (ResNet Pass-Through) ---
+  global_skip: false                # Enable parallel Base MLP skip connection
+  skip_use_pretrained_mlp: true     # Use warm-started MLP for Base MLP stream
+  skip_mlp_trainable: true          # Allow fine-tuning of Base MLP weights
+
+training:
+  warm_start: true                  # Enable warm-start from pre-trained MLP
+  warm_start_unfreeze_epoch: 2000   # Epoch to transition from Phase 1 to Phase 2
+  warm_start_study_name: null       # Optional custom study name to load specific MLP
+  early_stopping_patience: 2500

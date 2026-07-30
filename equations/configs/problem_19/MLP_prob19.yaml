@@ -1,0 +1,30 @@
+data:
+  problem_id: 19
+  domain:
+  - 0.0
+  - 1.0
+  num_quadrature_nodes: 10
+  num_collocation_points_adam: 250
+  num_collocation_points_lbfgs: 500
+  num_boundary_points_adam: 128
+  num_boundary_points_lbfgs: 2
+model:
+  output_dim: 2
+  type: MLP
+  hidden_layers: 5
+  activation: Tanh
+  hidden_features: 128
+experiment:
+  seed: 42
+  name: MLP_prob19
+  best_mae: 0.00016249908367171884
+training:
+  optimizer: Hybrid
+  learning_rate: 0.00026894046076941086
+  learning_rate_lbfgs: 1.0
+  scheduler: WarmupCosine
+  warmup_epochs: 54
+  epochs: 4000
+  early_stopping_patience: 500
+  early_stopping_min_delta: 1.0e-05
+  weight_decay: 8.225258014654138e-06

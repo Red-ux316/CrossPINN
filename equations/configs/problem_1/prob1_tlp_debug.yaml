@@ -1,0 +1,46 @@
+data:
+  domain:
+  - 0.0
+  - 1.0
+  problem_id: 1
+  num_quadrature_nodes: 10
+  num_collocation_points_adam: 100
+  num_collocation_points_lbfgs: 200
+  num_boundary_points_adam: 10
+  num_boundary_points_lbfgs: 64
+experiment:
+  seed: 42
+  name: prob1_tlp_debug
+  best_mae: 0.4812881648540497
+training:
+  epochs: 5
+  early_stopping_patience: 2500
+  early_stopping_min_delta: 1.0e-05
+  optimizer: AdamW
+  learning_rate: 0.03835818178807874
+  weight_decay: 1.2337788415905742e-05
+  scheduler: WarmupCosine
+  warmup_epochs: 0
+  warm_start: true
+  warm_start_unfreeze_epoch: 2
+  warm_start_study_name: null
+model:
+  type: TLP
+  activation: Tanh
+  pos_encoder_type: rff
+  hidden_features: 4
+  num_decoder_layers: 1
+  num_heads: 1
+  num_support_points: 5
+  support_points_distribution: grid
+  beta_penalty: 5.0
+  siren_omega: 16.467838609177733
+  causal_mask: false
+  LinNorm: true
+  residual_norm: false
+  use_rff: false
+  rff_sigma: 1.0
+  global_skip: true
+  skip_use_pretrained_mlp: true
+  skip_mlp_trainable: true
+  learn_mem_val: false

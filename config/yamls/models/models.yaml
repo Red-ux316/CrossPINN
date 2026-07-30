@@ -1,0 +1,15 @@
+model:
+  output_dim: 1
+training:
+  optimizer: AdamW
+  scheduler: WarmupCosine
+  warmup_epochs: 50
+  epochs: 10000
+  early_stopping_patience: 500
+  early_stopping_min_delta: 1.0e-05
+data:
+  num_quadrature_nodes: 10
+  num_collocation_points_adam: 500
+  num_collocation_points_lbfgs: 500
+  num_boundary_points_adam: 64
+  num_boundary_points_lbfgs: 64

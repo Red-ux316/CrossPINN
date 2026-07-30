@@ -1,0 +1,11 @@
+# ==============================================================================
+# MLP-Family (MLP & RISN) Default Configuration
+# ==============================================================================
+model:
+  activation: Tanh        # Activation function: Tanh, GELU, SiLU
+  hidden_features: 20     # Number of neurons per hidden layer
+
+training:
+  optimizer: Hybrid        # Optimal recipe for MLP/RISN: AdamW warmup + L-BFGS refinement
+  learning_rate: 0.01
+  learning_rate_lbfgs: 1.0

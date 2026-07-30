@@ -1,0 +1,41 @@
+prob1:
+  - MLP_prob1
+  - TLP_posEnc_GlobalSkip_prob1
+  - RISN_prob1
+  - TLP_posEnc_noWarmStart_prob1
+
+# prob8:
+#   - MLP_prob8
+#   - TLP_posEnc_GlobalSkip_prob8
+#   - RISN_prob8
+#   - TLP_posEnc_noWarmStart_prob8
+
+prob19:
+  - MLP_prob19
+  - TLP_posEnc_GlobalSkip_prob19
+  - RISN_prob19
+  - TLP_posEnc_noWarmStart_prob19
+
+prob22:
+  - MLP_prob22
+  - TLP_posEnc_GlobalSkip_prob22
+  - RISN_prob22
+  - TLP_posEnc_noWarmStart_prob22
+
+prob24:
+  - MLP_prob24
+  - TLP_posEnc_GlobalSkip_prob24
+  - RISN_prob24
+  - TLP_posEnc_noWarmStart_prob24
+
+prob25:
+  - MLP_prob25
+  - TLP_posEnc_GlobalSkip_prob25
+  - RISN_prob25
+  - TLP_posEnc_noWarmStart_prob25
+
+prob34:
+  - MLP_prob34
+  - TLP_posEnc_GlobalSkip_prob34
+  - RISN_prob34
+  - TLP_posEnc_noWarmStart_prob34

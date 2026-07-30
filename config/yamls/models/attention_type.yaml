@@ -1,0 +1,19 @@
+# ==============================================================================
+# Attention-Family (TLP & TransPINN) Default Configuration
+# ==============================================================================
+model:
+  activation: GELU          # Activation function: GELU, Tanh, SiLU
+  hidden_features: 32       # Latent embedding dimension (H)
+  num_heads: 4              # Number of attention heads
+  num_decoder_layers: 4     # Number of cross-attention decoder layers
+  LinNorm: false            # Apply LayerNorm to Query and Key before MHA
+  residual_norm: false      # Apply LayerNorm on residual connections
+  num_support_points: 64              # Number of support points (N_sup)
+  support_points_distribution: 'grid' # Placement method: 'grid', 'uniform', 'beta'
+  beta_penalty: 5.0                   # Clustering factor when distribution is 'beta'
+  causal_mask: false                  # Apply causal mask to memory attention
+  siren_omega: 30.0                   # Frequency factor for SIREN positional encoder
+
+training:
+  learning_rate: 0.001
+  weight_decay: 0.0001

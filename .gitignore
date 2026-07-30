@@ -1,0 +1,11 @@
+
+# Data
+data/
+*.h5
+*.pt
+*.pth
+plots/
+
+# Python
+__pycache__/
+*.pyc

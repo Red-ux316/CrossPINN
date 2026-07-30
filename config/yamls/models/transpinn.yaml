@@ -1,0 +1,15 @@
+# ==============================================================================
+# TransPINN (Encoder-Decoder Transformer PINN) Specific Configuration
+# ==============================================================================
+model:
+  type: TransPINN
+
+  # --- Positional Encoder Setup ---
+  pos_encoder_type: 'lff'   # Spatial encoder: 'rff', 'lff', 'mlp', 'siren', 'rbf'
+
+  # --- Encoder & Decoder Architecture ---
+  num_encoder_layers: 2     # Number of self-attention encoder layers
+  residual_norm: true       # Apply LayerNorm on residual connections
+
+  # --- Support Points & Latent Map ---
+  support_points_distribution: 'beta' # Placement method: 'grid', 'uniform', 'beta'

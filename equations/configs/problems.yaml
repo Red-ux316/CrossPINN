@@ -1,0 +1,7 @@
+data:
+  domain:
+  - 0.0
+  - 1.0
+  num_quadrature_nodes: 10
+experiment:
+  seed: 42

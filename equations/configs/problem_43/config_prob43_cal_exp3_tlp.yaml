@@ -1,0 +1,26 @@
+experiment:
+  name: Problem43_TLP
+  best_mae: 0.2683631181716919
+data:
+  num_collocation_points_adam: 1000
+  num_collocation_points_lbfgs: null
+  num_quadrature_nodes: 5
+  num_boundary_points_adam: 125
+model:
+  type: TLP
+  activation: null
+  hidden_features: 128
+  num_decoder_layers: 2
+  num_heads: 4
+  num_support_points: 256
+  chebyshev: null
+  causal_mask: null
+training:
+  epochs: null
+  optimizer: null
+  learning_rate: 0.0006752329545769932
+  weight_decay: 2.236569676100579e-06
+  scheduler: null
+  warmup_epochs: 396
+  early_stopping_patience: null
+  early_stopping_min_delta: null

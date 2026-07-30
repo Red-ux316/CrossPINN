@@ -1,0 +1,38 @@
+data:
+  domain:
+  - 0.0
+  - 1.0
+  problem_id: 1
+  num_quadrature_nodes: 10
+  num_collocation_points_adam: 100
+  num_collocation_points_lbfgs: 200
+  num_boundary_points_adam: 10
+  num_boundary_points_lbfgs: 64
+experiment:
+  seed: 42
+  name: prob1_transpinn_debug
+  best_mae: 1.8878086805343628
+training:
+  epochs: 5
+  early_stopping_patience: 2500
+  early_stopping_min_delta: 1.0e-05
+  optimizer: AdamW
+  learning_rate: 0.002733846106528499
+  weight_decay: 6.7954593085138235e-06
+  scheduler: WarmupCosine
+  warmup_epochs: 0
+model:
+  type: TransPINN
+  activation: GELU
+  pos_encoder_type: rff
+  hidden_features: 4
+  num_encoder_layers: 1
+  num_decoder_layers: 1
+  num_heads: 1
+  num_support_points: 5
+  support_points_distribution: beta
+  beta_penalty: 4.800997649657987
+  siren_omega: 30.0
+  causal_mask: false
+  LinNorm: true
+  residual_norm: true

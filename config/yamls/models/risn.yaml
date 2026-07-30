@@ -1,0 +1,6 @@
+# ==============================================================================
+# RISN (Residual Integrated Solution Network) Specific Configuration
+# ==============================================================================
+model:
+  type: RISN
+  num_blocks: 7           # Number of residual blocks

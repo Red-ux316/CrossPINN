@@ -1,0 +1,31 @@
+data:
+  problem_id: 24
+  num_quadrature_nodes: 10
+  domain:
+  - 0.0
+  - 1.0
+  num_collocation_points_adam: 250
+  num_collocation_points_lbfgs: 500
+  num_boundary_points_adam: 128
+  num_boundary_points_lbfgs: 64
+  num_quadrature_points: 10
+experiment:
+  seed: 42
+  name: MLP_prob24
+  best_mae: 4.62784828414442e-06
+model:
+  type: MLP
+  hidden_layers: 10
+  activation: Tanh
+  hidden_features: 128
+  output_dim: 1
+training:
+  optimizer: Hybrid
+  learning_rate: 0.0008597370262280523
+  learning_rate_lbfgs: 1.0
+  scheduler: WarmupCosine
+  warmup_epochs: 207
+  epochs: 10000
+  early_stopping_patience: 500
+  early_stopping_min_delta: 1.0e-05
+  weight_decay: 9.609499447660706e-06

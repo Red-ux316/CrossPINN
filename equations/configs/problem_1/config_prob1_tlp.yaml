@@ -1,0 +1,17 @@
+experiment:
+  name: Problem1_TLP
+  best_mae: 0.6321418881416321
+data:
+  num_collocation_points_adam: 500
+  num_boundary_points_adam: 62
+  num_quadrature_nodes: 10
+model:
+  type: TLP
+  hidden_features: 64
+  num_decoder_layers: 4
+  num_heads: 8
+  causal_mask: false
+training:
+  learning_rate: 0.004363790739449479
+  weight_decay: 4.625292432887002e-05
+  warmup_epochs: 0

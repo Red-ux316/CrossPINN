@@ -1,0 +1,31 @@
+data:
+  problem_id: 22
+  num_quadrature_nodes: 10
+  domain:
+  - 0.0
+  - 1.0
+  num_collocation_points_adam: 1000
+  num_collocation_points_lbfgs: 500
+  num_boundary_points_adam: 64
+  num_boundary_points_lbfgs: 64
+  num_quadrature_points: 10
+experiment:
+  seed: 42
+  name: RISN_prob22
+  best_mae: 8.308618271257728e-05
+model:
+  type: RISN
+  num_blocks: 6
+  activation: Tanh
+  hidden_features: 128
+  output_dim: 1
+training:
+  optimizer: Hybrid
+  learning_rate: 0.0035312479834987047
+  learning_rate_lbfgs: 1.0
+  scheduler: WarmupCosine
+  warmup_epochs: 497
+  epochs: 10000
+  early_stopping_patience: 500
+  early_stopping_min_delta: 1.0e-05
+  weight_decay: 1.8126353216398657e-05

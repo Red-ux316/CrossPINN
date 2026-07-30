@@ -1,0 +1,6 @@
+# ==============================================================================
+# MLP (Standard Baseline PINN) Specific Configuration
+# ==============================================================================
+model:
+  type: MLP
+  hidden_layers: 7        # Number of hidden layers

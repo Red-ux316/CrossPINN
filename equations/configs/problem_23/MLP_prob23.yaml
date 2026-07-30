@@ -1,0 +1,28 @@
+data:
+  problem_id: 23
+  domain:
+  - 0.0
+  - 1.0
+  num_quadrature_nodes: 10
+  num_collocation_points_adam: 1000
+  num_collocation_points_lbfgs: 500
+  num_boundary_points_adam: 64
+  num_boundary_points_lbfgs: 64
+experiment:
+  seed: 42
+  name: MLP_prob23
+  best_mae: 0.008225914090871811
+model:
+  type: MLP
+  hidden_layers: 5
+  activation: Tanh
+  hidden_features: 128
+training:
+  learning_rate: 0.0028535165281720074
+  optimizer: AdamW
+  scheduler: WarmupCosine
+  warmup_epochs: 350
+  epochs: 4000
+  early_stopping_patience: 500
+  early_stopping_min_delta: 1.0e-05
+  weight_decay: 2.1936618711245287e-05

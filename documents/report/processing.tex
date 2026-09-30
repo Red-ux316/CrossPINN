@@ -1,0 +1,22 @@
+% !TEX root = main.tex
+
+\section{Query-Based Processing Pipeline and Data Streams}
+\label{sec:processing_pipeline}
+
+To model non-local Volterra operators while preserving computational efficiency, C-PINN processes spatial coordinates through a query-based processing pipeline, as illustrated in Fig.~\ref{fig:c_pinn_macro_arch}. Rather than treating input coordinates as isolated point samples, physical coordinates act as functional sets of queries that interrogate a globally structured latent basis (see Section~\ref{sec:learning_framework} for detailed micro-architectural specifications of the decoder stack).
+
+\subsection{Functional Coordinate Streams and Discretization}
+Under the Method of Manufactured Solutions (MMS)~\cite{moghaddam2025risn}, spatial coordinates are sampled directly from the physical domain and formatted into four distinct functional sets:
+\begin{enumerate}
+    \item \textbf{Support Anchors ($X_{sup}$):} A grid of $N_{sup}$ equidistant coordinates spanning $[a, b]$, serving as static spatial anchors for the global latent basis.
+    \item \textbf{Collocation Queries ($X_r$):} A batch of $N_r$ domain points sampled at random at each iteration to compute differential operator residuals $\mathcal{R}(x)$.
+    \item \textbf{Quadrature Queries ($X_q$):} For each collocation point $x_i \in X_r$, $N_q$ historical coordinates $\{y_j(x_i)\} \subset [a, x_i]$ are generated as mapped Gauss-Legendre quadrature roots to evaluate Volterra integrals. 
+    \item \textbf{Boundary Queries ($X_{bc}$):} A set of $N_{bc}$ boundary/initial coordinates enforcing Dirichlet or initial condition constraints.
+\end{enumerate}
+While domain-adapted sampling distributions (e.g., Beta distributions) could be used to concentrate collocation points near boundaries or stiff regions, for simplicity we adopt uniform grid sampling across all experimental evaluations.
+
+\subsection{Encoder Omission and Non-Local Projection}
+Standard Transformer architectures rely on encoder stacks with $\mathcal{O}(N^2)$ Self-Attention complexity to build contextual sequence representations. Inspired by Perceiver IO~\cite{jaegle2021perceiverio}, C-PINN explicitly omits the Self-Attention encoder, since introduces heavy computational overhead without proportional gains in physical expressivity. Instead, the spatial domain is anchored to the static Support Anchors ($X_{sup}$), forming a \emph{Global Latent Basis}. Target query coordinates $X_Q \in \{X_r, X_q, X_{bc}\}$ evaluate solution values via targeted Cross-Attention layers. This operation acts as a \emph{Learnable Non-Local Projection}: query coordinates compute similarity scores across the latent basis, retrieving integrated historical context in a single forward pass while bypassing the gradient conflict inherent to pointwise MLPs.
+
+\subsection{Metric Integrity via Shared Positional Encoding}
+Maintaining physical metric integrity across the attention mechanism is essential for accurate spatial regression. In C-PINN, both the physical queries $X_Q$ and the static support anchors $X_{sup}$ are embedded using the exact same Positional Encoder $E_{pos}(\cdot)$. Sharing these weights guarantees that dot-product similarity metrics in the latent space ($Q \cdot K^T$) directly reflect physical geometric distances in the original domain, preventing spatial distortions during attention weighting.

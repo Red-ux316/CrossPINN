@@ -1,0 +1,22 @@
+% !TEX root = main.tex
+
+\section{Introduction}
+\label{sec:introduction}
+
+Over the last decade, Deep Learning has been successfully employed to tackle complex physical systems traditionally governed by non-linear differential equations. Central to this paradigm are Physics-Informed Neural Networks (PINNs)~\cite{raissi2019physics}, which directly embed the governing physical laws into the training loss via differential reconstruction residuals. By penalizing non-physical predictions, PINNs enable the discovery of continuous, mesh-free solutions even when observational data is sparse.
+
+While standard PINNs have proven to be highly effective for purely differential problems, significant progress can be made extending these frameworks to systems with non-local memory. In this work, we focus on Volterra Integro-Differential Equations (VIDEs), a complex class of physical problems where the unknown state is governed not only by its immediate derivatives but also by its entire historical trajectory through an integral operator. This non-local memory dependence is a fundamental property governing critical real-world phenomena, such as epidemiology models, population dynamics, and the behavior of viscoelastic materials.
+
+Existing deep learning solvers for VIDEs, such as the Residual Integration Solver Network (RISN)~\cite{moghaddam2025risn}, rely on Multi-Layer Perceptron (MLP) variants. However, standard MLPs operate under a strict \textit{pointwise} paradigm, processing spatial coordinates independently. Because Volterra operators are dominated by causal memory, these pointwise architectures are structurally ill-suited to capture non-local dependencies. Lacking internal relational mechanisms, they are forced to delegate the entire memory correlation to the external loss formulation.
+
+Motivated by recent advances in incorporating attention mechanisms into PINNs and operator learning (e.g., Physics-Guided Transformers~\cite{zeraatkar2026pgt}, PINNsFormer~\cite{zhao2023pinnsformer}, AttnPINNs~\cite{song2026attnpinns}, and operator-level attention frameworks~\cite{kissas2022learning}), we investigate whether attention-based models can better address VID equations. Nevertheless, standard Transformer architectures rely on full Self-Attention encoders,
+which suffer of severe computational complexity that dramatically restrict their applicability in continuous physical problems. To overcome this computational bottleneck, we propose \textbf{CrossPINN (C-PINN)}~\cite{rossi2026crosspinn}, an efficient architecture that bypasses dynamic sequence encoding in favor of a direct, learnable global latent basis interlinked via Sequential Cross-Attention.
+While established complementary techniques—such as ReLoBRaLo loss balancing, Gauss-Legendre quadrature, and positional encodings—are directly adopted from the literature, our primary focus remains on isolating and evaluating the cross-attention mechanism itself as a solver for VIDEs.
+The primary contributions of our implementation are the following:
+\begin{itemize}
+    \item We designed and implemented \textbf{CrossPINN (C-PINN)}, a domani-wise Cross-Attention architecture tailored to model non-local memory in Volterra operators via a direct learnable global latent basis.
+    \item We documented the architectural evolution of the framework, detailing the iterative design choices required to adapt standard attention mechanisms to the strict constraints of physics-informed solvers.
+    \item We performed a systematic benchmark evaluation comparing C-PINN variants against baseline MLP architectures across representative Volterra problems.
+\end{itemize}
+
+This report is structured as follows. Section~\ref{sec:background} reviews the VIDE mathematical formulation and related work. Section~\ref{sec:processing_pipeline} details the query-based processing pipeline and spatial coordinate streams. Section~\ref{sec:learning_framework} presents the C-PINN architecture and optimization strategies. Finally, Section~\ref{sec:results} discusses the benchmark results, followed by concluding remarks in Section~\ref{sec:conclusions}.

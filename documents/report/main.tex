@@ -1,0 +1,152 @@
+\documentclass[10pt, conference, letterpaper]{IEEEtran}
+
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc} 
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{import}
+\usepackage{multirow}
+\usepackage{cite}
+\usepackage[colorlinks=true, citecolor=blue, linkcolor=blue, urlcolor=blue]{hyperref}
+\usepackage[export]{adjustbox}
+\usepackage{breqn}
+\usepackage{mathrsfs}
+\usepackage{acronym}
+%\usepackage[keeplastbox]{flushend}
+\usepackage{setspace}
+\usepackage{bm}
+\usepackage{stackengine}
+\usepackage{booktabs}
+\usepackage{float}
+
+\usepackage{listings}
+
+\lstset{%
+ backgroundcolor=\color[gray]{.85},
+ basicstyle=\small\ttfamily,
+ breaklines = true,
+ keywordstyle=\color{red!75},
+ columns=fullflexible,
+}%
+
+\lstdefinelanguage{BibTeX}
+  {keywords={%
+      @article,@book,@collectedbook,@conference,@electronic,@ieeetranbstctl,%
+      @inbook,@incollectedbook,@incollection,@injournal,@inproceedings,%
+      @manual,@mastersthesis,@misc,@patent,@periodical,@phdthesis,@preamble,%
+      @proceedings,@standard,@string,@techreport,@unpublished%
+      },
+   comment=[l][\itshape]{@comment},
+   sensitive=false,
+  }
+
+\usepackage{listings}
+
+% listings settings from classicthesis package by
+% Andr\'{e} Miede
+\lstset{language=[LaTeX]Tex,%C++,
+    keywordstyle=\color{RoyalBlue},%\bfseries,
+    basicstyle=\small\ttfamily,
+    %identifierstyle=\color{NavyBlue},
+    commentstyle=\color{Green}\ttfamily,
+    stringstyle=\rmfamily,
+    numbers=none,%left,%
+    numberstyle=\scriptsize,%\tiny
+    stepnumber=5,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frameround=ftff,
+    frame=single
+    %frame=L
+}
+
+\renewcommand{\thetable}{\arabic{table}}
+\renewcommand{\thesubtable}{\alph{subtable}}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\def\delequal{\mathrel{\ensurestackMath{\stackon[1pt]{=}{\scriptscriptstyle\Delta}}}}
+
+\graphicspath{{./figures/}}
+\setlength{\belowcaptionskip}{0mm}
+\setlength{\textfloatsep}{8pt}
+
+\newcommand{\eq}[1]{Eq.~\eqref{#1}}
+\newcommand{\fig}[1]{Fig.~\ref{#1}}
+\newcommand{\tab}[1]{Tab.~\ref{#1}}
+\newcommand{\secref}[1]{Section~\ref{#1}}
+
+\newcommand{\rev}[1]{{\color{blue}#1}}
+\newcommand{\red}[1]{{\color{red}#1}}
+\newcommand{\green}[1]{{\color[rgb]{0,0.6,0}#1}}
+\newcommand{\mytexttilde}{{\raise.17ex\hbox{$\scriptstyle\mathtt{\sim}$}}}
+\newcommand{\nasmarker}{^{\textcolor{blue}{\star}}}
+
+%\renewcommand{\baselinestretch}{0.98}
+% \renewcommand{\bottomfraction}{0.8}
+% \setlength{\abovecaptionskip}{0pt}
+\setlength{\columnsep}{0.2in}
+
+% \IEEEoverridecommandlockouts\IEEEpubid{\makebox[\columnwidth]{PUT COPYRIGHT NOTICE HERE \hfill} \hspace{\columnsep}\makebox[\columnwidth]{ }} 
+
+\title{Attention-Based PINN Solvers for Volterra Integro-Differential Equations}
+
+\IEEEoverridecommandlockouts
+\author{Federico Rossi$^\dag$
+\thanks{$^\dag$Department of Physics, University of Padova}
+\thanks{Source code repository available at: \url{https://github.com/Red-ux316/CrossPINN}}
+}
+\IEEEoverridecommandlockouts
+
+\newcounter{remark}[section]
+\newenvironment{remark}[1][]{\refstepcounter{remark}\par\medskip
+   \textbf{Remark~\thesection.\theremark. #1} \rmfamily}{\medskip}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+In the recent literature, standard Multi-Layer Perceptrons (MLPs) implementations of Physics-Informed Neural Networks (PINNs) have been used to solve complex Volterra Integro-Differential Equations (VIDEs). The intrinsic memory-dependent nature of such problems, however, suggests that transformer-like architectures could represent an inherently better-suited approach to this task. 
+Starting from this idea, in this work we introduce CrossPINN (C-PINN), a query-based cross-attention architecture tailored for memory-dependent physical systems. By replacing heavy self-attention encoders with a learnable latent basis interrogated by spatial queries, C-PINN efficiently captures global Volterra integration kernels without quadratic computational overhead. 
+Furthermore, integrating cross-attention as a global residual correction to a baseline MLP ($\hat{u} = \text{MLP} + \Delta u_{\text{Attn}}$) we where able to further improve the performance of the baseline model. In particular, evaluation on a benchmark set of Volterra problems—spanning 1D linear and non-linear VIDEs, coupled systems, and 2D viscoelastic PDE-IDEs—showed that C-PINN consistently outperforms pointwise MLP and RISN baselines, achieving up to an order of magnitude improvement in Mean Absolute Error (MAE).
+\end{abstract}
+
+\IEEEkeywords
+PINN, Volterra equations, attention 
+\endIEEEkeywords
+
+
+\input{intro}
+
+\input{related}
+
+\input{processing}
+
+%\input{data_rep}
+
+\input{learning_framework}
+
+\input{results}
+
+\input{conclusions}
+
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
+
+

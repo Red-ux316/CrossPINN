@@ -1,0 +1,39 @@
+% !TEX root = main.tex
+
+\section{Background and Related Work}
+\label{sec:background}
+
+\subsection{Problem Formulation and Physics-Informed Loss}
+A general non-linear Volterra Integro-Differential Equation (VIDE) defined on the standard bounded domain $\Omega = [a, b]$ is formulated as:
+\begin{equation}
+    \begin{aligned}
+        \mathcal{D}(u)(x) + \mathcal{F}(u)(x) 
+        = \mathcal{S}(x) + \int_{a}^{x} K(x, y) \, \zeta\big(u(y)\big) \, dy,
+    \end{aligned}
+    \label{eq:general_vide}
+\end{equation}
+where $\mathcal{D}(u)(x)$ represents a linear differential operator, $\mathcal{F}(u)(x)$ denotes local algebraic state interactions, $K(x, y)$ is a continuous memory kernel, $\zeta(\cdot)$ is a non-linear mapping, and $\mathcal{S}(x)$ is a known driving source. 
+
+To train a neural approximator $\hat{u}_\theta(x)$, we minimize the Integro-Differential Equation (IDE) residual $ \mathcal{R}(x)$ of Eq.~\eqref{eq:general_vide}. Evaluating this residual requires computing the Volterra integral, which we discretize via an $N_q$-point Gauss-Legendre quadrature scheme~\cite{moghaddam2025risn,aghaei2024pinnies}, yielding the computable residual $\mathcal{R}(x)$:
+\begin{equation}
+    \begin{aligned}
+        \mathcal{R}(x) = \;&\mathcal{D}(\hat{u}_\theta)(x) + \mathcal{F}(\hat{u}_\theta)(x) \\
+        &- \sum_{j=1}^{N_q} w_j(x) K(x, y_j) \, \zeta\big(\hat{u}_\theta(y_j)\big) - \mathcal{S}(x),
+    \end{aligned}
+    \label{eq:coupled_residual}
+\end{equation}
+where $y_j$ and $w_j(x)$ represent the quadrature nodes and integration weights. The network parameters $\theta$ are optimized by minimizing the Mean Squared Residual $\mathcal{L}_{\text{IDE}} = \frac{1}{N_r} \sum_{i=1}^{N_r} | \mathcal{R}(x_i) |^2$ over a batch of $N_r$ collocation points.
+
+\subsection{Volterra Solvers and Manufactured Solutions}
+
+In recent years, several specialized deep learning architectures have been introduced to solve integral and integro-differential equations, including Auxiliary PINNs (A-PINN)~\cite{yuan2022apinn}, and internal variable reformulations for exponential kernels~\cite{Jang_2026}. Notably, Moghaddam et al.~\cite{moghaddam2025risn} proposed the Residual Integration Solver Network (RISN) to mitigate gradient degradation in integral operators.
+
+Unlike standard machine learning tasks, forward operator learning often lacks experimental observational datasets. To rigorously validate architectures without real-world data, we employ the Method of Manufactured Solutions (MMS)~\cite{moghaddam2025risn}. In MMS, a smooth analytical target solution $u_{\text{exact}}(x)$ is selected \textit{a priori} and substituted into the integro-differential operator to analytically synthesize the corresponding source term $\mathcal{S}(x)$. 
+This guarantees to have an exact objective to use for precise and reliable error quantification against baseline architectures.
+
+While RISN and related variants provide structural improvements over standard baseline Multi-Layer Perceptrons, applying an MLP-based architecture to solve Eq.~\eqref{eq:coupled_residual} introduces a structural mismatch, which we refer to as the \textit{pointwise paradox}. Volterra equations are intrinsically non-local, yet MLPs evaluate each coordinate in strict isolation, delegating the entire sequence-awareness to the external loss function.
+
+We hypothesize that this structural mismatch gives rise to an important optimization pathology, which we call the \textit{gradient conflict}. As shown in Eq.~\eqref{eq:coupled_residual}, computing the numerical residual $\mathcal{R}(x)$ mathematically couples the network's prediction at the present coordinate, $\hat{u}_\theta(x)$, with its predictions at historical quadrature nodes, $\hat{u}_\theta(y_j)$. During backpropagation, the optimizer must update the shared global weights $\theta$ based on these coupled outputs. Consequently, the gradients computed for the local state $\hat{u}_\theta(x)$ can directly conflict with those required to minimize approximation errors across past states $\hat{u}_\theta(y_j)$, trapping the optimizer in suboptimal local minima.
+
+\subsection{Resolving the Paradox via Attention}
+Tom mitigate this potential gradient conflict, we propose embedding a Cross-Attention mechanism into the physics-informed architecture. Because cross-attention is intrinsically set-aware, it allows the model to correlate a specific query coordinate (the present state) with a structured latent basis (the historical memory) during the forward pass, embedding memory integration directly into the network architecture.

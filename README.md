@@ -105,7 +105,7 @@ Six benchmark problems with known exact solutions (method of manufactured soluti
 | E | 34 | 2D viscoelastic PDE-IDE | 6.76e-04 | **1.37e-04** | 3.32e-03 | 5.37e-04 |
 | F | 19 | 1D coupled IDE system | 2.97e-04 | 2.31e-04 | **7.35e-05** | 2.65e-04 |
 
-C-PINN with the global skip connection is the best model on A-D; the version without skip is best on the coupled system F; RISN is best on the 2D problem E, where C-PINN does not improve on the baseline. The results come from the benchmark suite in `runner.py` (tuning followed by training); the report gives no seed statistics. Trained weights and visualization reports are shared in a [Google Drive folder](https://drive.google.com/drive/folders/1ooljfmzFwYySVHlPgAsX7_Weob1u-H_C?usp=sharing). The full report is not bundled in this repository.
+C-PINN with the global skip connection is the best model on A-D; the version without skip is best on the coupled system F; RISN is best on the 2D problem E, where C-PINN does not improve on the baseline. The results come from the benchmark suite in `runner.py` (tuning followed by training); the report gives no seed statistics. Trained weights and visualization reports are shared in a [Google Drive folder](https://drive.google.com/drive/folders/1ooljfmzFwYySVHlPgAsX7_Weob1u-H_C?usp=sharing). The report is in [`documents/report/`](documents/report/) ([PDF](documents/report/CrossPINN_report.pdf), LaTeX sources).
 
 To re-run the whole suite (tuning, training and evaluation for each problem and model), use `runner.py` / `runner.ipynb`.
 
@@ -119,5 +119,10 @@ The smoke test runs a 5-epoch debug training on CPU.
 
 ## 7. References & Citation
 
-- **CrossPINN report**: *Attention-Based PINN Solvers for Volterra Integro-Differential Equations* (course project report, University of Padova, 2026; not bundled here).
+- **CrossPINN report**: *Attention-Based PINN Solvers for Volterra Integro-Differential Equations*, F. Rossi, 2026: [`documents/report/CrossPINN_report.pdf`](documents/report/CrossPINN_report.pdf).
+- **ReLoBRaLo**: R. Bischof and M. Kraus, *Multi-Objective Loss Balancing for Physics-Informed Deep Learning*, [arXiv:2110.09813](https://arxiv.org/abs/2110.09813). Our `losses/relobralo.py` is adapted from a third-party PyTorch implementation; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 - **RISN Baseline**: [Physics-Informed Neural Networks for Integral and Integro-Differential Equations](https://arxiv.org/abs/2501.16370v3) (arXiv:2501.16370v3).
+
+## 8. License
+
+MIT, see [LICENSE](LICENSE), except `losses/relobralo.py`, which is adapted from third-party code without a declared license (see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)).

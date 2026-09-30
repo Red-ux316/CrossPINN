@@ -1,0 +1,65 @@
+% !TEX root = main.tex
+
+\section{Experimental Results and Analysis}
+\label{sec:results}
+
+\begin{table*}[t]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{@{}lllc@{}}
+\toprule
+\textbf{ID} & \textbf{Category} & \textbf{Operator Formulation} & \textbf{Exact Solution $u(x)$} \\ 
+\midrule
+\textbf{Prob A} & 1D Linear (2nd Kind) & $u(x) = S(x) + \int_0^x (t-x) u(t) dt$ & $x + e^x$ \\
+\textbf{Prob B} & 1D IDE (1st Order) & $u'(x) = S(x) + \int_0^x u(t) dt$ & $\sin(x)$ \\
+\textbf{Prob C} & 1D Non-Linear IDE & $u'(x) = S(x) + \int_0^x u^2(t) dt$ & $x$ \\
+\textbf{Prob D} & 1D IDE (2nd Order) & $u''(x) = S(x) + \int_0^x (x-t) u(t) dt$ & $\sin(x)$ \\
+\textbf{Prob E} & 2D Viscoelastic PDE & $\partial_t u = \alpha \partial_{xx} u + S(x,t) - \gamma \int_0^t e^{-\beta(t-s)} u(x,s) ds$ & $\sin(\pi x)e^{-t}$ \\
+\textbf{Prob F} & 1D Coupled IDE System & $\begin{cases} u_1'(x) = S_1(x) + \int_0^x [(x-t)u_1(t) + (x-t+1)u_2(t)] dt \\ u_2'(x) = S_2(x) + \int_0^x [(x-t+1)u_1(t) + (x-t)u_2(t)] dt \end{cases}$ & $\begin{cases} u_1(x) = 1+x+x^2 \\ u_2(x) = 1-x-x^2 \end{cases}$ \\
+\bottomrule
+\end{tabular}}
+\caption{Benchmark Suite of Volterra Integro-Differential Equations (Note that all our problems are defined on $\Omega = [0,1]$).}
+\label{tab:equations_suite}
+\end{table*}
+
+\subsection{Evaluation Protocol}
+Inferential accuracy is evaluated on an independent, dense uniform test grid of $N_{\text{test}} = 1000$ coordinates spanning $[a, b]$, quantified via Mean Absolute Error (MAE) against the analytical ground truth solution $u_{\text{exact}}(x)$ synthesized via MMS. While both the total optimization loss ($\mathcal{L}_{\text{Total}}$) and the absolute physical error (MAE) were rigorously tracked, we report the MAE as the primary metric for comparative analysis, as it provides a standardized, unbiased measure of spatial generalization across equations with varying residual scales.
+
+\subsection{Benchmark Suite and Physical Formulations}
+To systematically validate the C-PINN architecture against baseline models, we selected a diverse suite of Volterra Integro-Differential Equations. The benchmark includes foundational 1D formulations (Prob A, B, C, D)~\cite{moghaddam2025risn}, a 2D spatio-temporal viscoelastic PDE (Prob E)~\cite{Jang_2026}, and a coupled system of integro-differential equations (Prob F)~\cite{moghaddam2025risn}. Due to space constraints, the governing operators, integration kernels, and analytical ground truths are summarized in Table~\ref{tab:equations_suite}.
+
+\subsection{Ablation Study and Performance Analysis}
+Table~\ref{tab:results_mae} summarizes the inferential accuracy (MAE) comparing the baseline models (MLP and RISN) against C-PINN with and without the global residual skip connection.
+
+For scalar 1D benchmarks (Prob A, B, C, D), the full C-PINN architecture consistently outperforms both baselines and the no-skip variant, reducing MAE by up to an order of magnitude. We hypothesize that the global skip connection structurally decouples the learning objective: the baseline MLP captures the primary differential field, while the cross-attention mechanism strictly models non-local memory corrections.
+
+Conversely, for the coupled IDE system (Prob F), C-PINN without the skip connection achieves the best overall performance ($7.35 \times 10^{-5}$). We conjecture that in multi-component coupled systems, constraining the architecture with an MLP residual base may introduce optimization stiffness, whereas unconstrained latent attention resolves the coupled field more effectively.
+
+Finally, for the 2D spatio-temporal viscoelastic PDE (Prob E), C-PINN does not outperform the specialized RISN baseline ($5.37 \times 10^{-4}$ vs. $1.37 \times 10^{-4}$). While C-PINN demonstrates strong superiority on simpler 1D benchmarks, this outcome suggests that scaling latent cross-attention to complex, higher-dimensional spatio-temporal systems poses significant challenges, likely requiring further architectural modifications and deeper investigation.
+
+Detailed training loss curves and solution fit profiles across all problems are omitted here as they offer limited additional insight beyond primary MAE metrics, but complete visualization reports and trained model weights are publicly available in the project repository~\cite{crosspinn_drive2026}.
+
+\begin{table}[H]
+\centering
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+ & \textbf{MLP} & \textbf{RISN} & \textbf{C-PINN} & \textbf{C-PINN} \\ 
+\textbf{Problem} & Baseline & Baseline & (No Skip) & (Global Skip) \\ \midrule
+\textbf{Prob A} & 2.23e-02 & 1.04e-03 & 4.21e-03 & \textbf{5.42e-04} \\
+\textbf{Prob B} & 5.42e-04 & 1.48e-04 & 3.74e-05 & \textbf{8.86e-06} \\
+\textbf{Prob C} & 5.10e-05 & 4.56e-05 & 2.81e-05 & \textbf{3.37e-06} \\
+\textbf{Prob D} & 1.56e-05 & 7.05e-06 & 4.41e-05 & \textbf{1.31e-06} \\
+\textbf{Prob E} & 6.76e-04 & \textbf{1.37e-04} & 3.32e-03 & 5.37e-04 \\
+\textbf{Prob F} & 2.97e-04 & 2.31e-04 & \textbf{7.35e-05} & 2.65e-04 \\ \bottomrule
+\end{tabular}}
+\caption{Mean Absolute Error (MAE) Benchmark Comparison}
+\label{tab:results_mae}
+\end{table}
+
+\subsection{Neural Architecture Search (NAS) Insights}
+Neural Architecture Search reveals distinct optimization dynamics between the residual and non-residual framework variants. 
+
+When the global residual skip connection is active, Optuna displays broad flexibility across structural choices without a single dominant configuration. Notably, base-model latent initialization shows no strict preference, indicating that the cross-attention mechanism can effectively learn the latent memory basis autonomously. This insensitivity highlights the robustness of the residual formulation: since the baseline MLP absorbs the primary spatio-temporal dynamics, the attention stream remains stable across hyperparameter choices, consistently favoring shallow decoder stacks ($1$--$2$ layers) paired with multi-head attention ($h = 4$ or $8$).
+
+Conversely, when the skip connection is disabled, resolving both differential and integral dynamics end-to-end imposes tighter constraints. In this setting, Optuna consistently rejects layer normalization to preserve metric gradients and requires high-density memory support (128 support points), confirming that unconstrained attention dynamics demand strict metric preservation.

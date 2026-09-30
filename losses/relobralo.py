@@ -1,10 +1,11 @@
 # -----------------------------------------------------------------------------
-# Attribution and License Notice
-# This implementation is adapted from the PyTorch implementation of ReLoBRaLo
-# (Relative Loss Balancing with Random Lookback) by Khadrawi.
-# Based on the original paper: "Multi-Objective Loss Balancing for 
-# Physics-Informed Deep Learning" by Rafael Bischof and Michael Kraus.
-# Original Repository: https://github.com/Khadrawi/ReLoBRaLo_PyTorch
+# Attribution notice
+# Adapted from the PyTorch implementation of ReLoBRaLo (Relative Loss Balancing
+# with Random Lookback) by Khadrawi: https://github.com/Khadrawi/ReLoBRaLo_PyTorch
+# The method is from R. Bischof and M. Kraus, "Multi-Objective Loss Balancing for
+# Physics-Informed Deep Learning", arXiv:2110.09813 (2021).
+# The Khadrawi repository declares no license (checked 2026-09-30), so this file is
+# not covered by the MIT license of this project. See THIRD_PARTY_NOTICES.md.
 # -----------------------------------------------------------------------------
 
 import torch

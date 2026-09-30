@@ -1,0 +1,12 @@
+% !TEX root = main.tex
+
+\section{Conclusions and Future Work}
+\label{sec:conclusions}
+
+In this work, we introduced CrossPINN (C-PINN), a query-based cross-attention architecture designed to tackle non-local memory dependencies in Volterra Integro-Differential Equations (VIDEs). By representing continuous physical coordinates as queries that interrogate a learnable latent memory basis, C-PINN overcomes the inherent pointwise limitations of standard MLPs while bypassing the quadratic computational burden of self-attention encoders.
+
+Empirical evaluations across diverse Volterra benchmarks demonstrate the flexibility of the proposed framework. On scalar 1D problems, C-PINN with global residual skip connections delivers up to an order of magnitude error reduction over standard baselines. In coupled system settings, removing the skip connection effectively relieves optimization stiffness between interacting fields. Finally, performance on spatio-temporal formulations underscores both the potential and current boundaries of latent cross-attention, pointing toward promising directions for higher-dimensional operator modeling.
+
+Furthermore, Neural Architecture Search (NAS) reveals no strict preference for any specific architectural choices, confirming the overall structural stability and robustness of the proposed framework.
+
+Future research directions could explore extending the framework to more complex physical formulations, evaluating alternative data and domain management strategies such as time-marching, and investigating the operator learning capabilities of C-PINN to generalize across parametric memory kernels. The complete source code implementation, model architectures, and benchmark suite are made publicly available at \url{https://github.com/Red-ux316/CrossPINN}.

@@ -23,7 +23,7 @@ if hasattr(torch.backends.cuda, 'enable_math_sdp'):
 
 class TLP(nn.Module):
     """
-    Trans Lite PINN (TLP)
+    CrossPINN (C-PINN), named Trans Lite PINN (TLP) in the code.
     Uses a symmetric memory created from learnable values and support points,
     and a cross-attention decoder. The positional encoder is shared between
     memory creation and query encoding.

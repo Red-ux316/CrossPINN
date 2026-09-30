@@ -53,7 +53,7 @@ def clear_tuning_artifacts(args, base_c):
 def save_best_configuration(trial, value, tuned_config, args, search_space, original_epochs=None, trial_weights_path=None):
     """
     Saves the best-performing configuration and model weights (.pt) to the local study file and Google Drive backup.
-    If --export_to_github is enabled, it also pushes the updated config file to Git.
+    The --export_to_github flag is kept for compatibility but currently has no effect (no Git push is implemented).
     """
     import copy
     from config.path_manager import PathManager
@@ -449,7 +449,7 @@ def main():
     parser = get_cli_parser(description="Hyperparameter tuning script using Optuna.")
     parser.add_argument('--n_trials', type=int, default=50, help='Number of Optuna trials')
     parser.add_argument('--continue', dest='continue_tune', action='store_true', help='Continue tuning after n_trials. By default (False), tuning stops when the total number of trials reaches n_trials.')
-    parser.add_argument('--no_github', dest='export_to_github', action='store_false', help='Disable syncing the best config to GitHub (enabled by default).')
+    parser.add_argument('--no_github', dest='export_to_github', action='store_false', help='Kept for compatibility; syncing to GitHub is not implemented, so this flag has no effect.')
     args, overrides = parser.parse_known_args()
 
     from config.study import Study

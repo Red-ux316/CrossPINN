@@ -9,3 +9,4 @@ plots/
 # Python
 __pycache__/
 *.pyc
+data_debug/

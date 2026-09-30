@@ -150,7 +150,7 @@ class Problem23_HelmholtzFredholm(VolterraProblem):
 
 class Problem34_ViscoelasticPDEIDE(Problem2D):
     r"""
-    Problem 34 (Problem F): Viscoelastic 2D PDE-IDE
+    Problem 34 (Problem E in the report): Viscoelastic 2D PDE-IDE
     Domain: Space x \in [0, 1], Time t \in [0, 1]
     Equation: \partial_t u = \alpha \partial_{xx} u + S(x,t) - \gamma \int_0^t e^{-\beta(t-s)} u(x,s) ds
     Exact Solution: u(x,t) = \sin(\pi x) e^{-t}
@@ -243,7 +243,7 @@ class Problem34_ViscoelasticPDEIDE(Problem2D):
 
 class Problem19_IDESystem1D(ProblemIDE):
     r"""
-    Problem 19: 1D Volterra IDE System (Coupled 2-Component Volterra System)
+    Problem 19 (Problem F in the report): 1D Volterra IDE System (Coupled 2-Component Volterra System)
     Equations:
       u1'(x) = S1(x) + \int_0^x [ (x-t) u1(t) + (x-t+1) u2(t) ] dt
       u2'(x) = S2(x) + \int_0^x [ (x-t+1) u1(t) + (x-t) u2(t) ] dt

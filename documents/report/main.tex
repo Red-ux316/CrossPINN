@@ -118,9 +118,9 @@
 
 \begin{abstract}
 
-In the recent literature, standard Multi-Layer Perceptrons (MLPs) implementations of Physics-Informed Neural Networks (PINNs) have been used to solve complex Volterra Integro-Differential Equations (VIDEs). The intrinsic memory-dependent nature of such problems, however, suggests that transformer-like architectures could represent an inherently better-suited approach to this task. 
+In the recent literature, standard Multi-Layer Perceptron (MLP) implementations of Physics-Informed Neural Networks (PINNs) have been used to solve complex Volterra Integro-Differential Equations (VIDEs). The intrinsic memory-dependent nature of such problems, however, suggests that transformer-like architectures could represent an inherently better-suited approach to this task. 
 Starting from this idea, in this work we introduce CrossPINN (C-PINN), a query-based cross-attention architecture tailored for memory-dependent physical systems. By replacing heavy self-attention encoders with a learnable latent basis interrogated by spatial queries, C-PINN efficiently captures global Volterra integration kernels without quadratic computational overhead. 
-Furthermore, integrating cross-attention as a global residual correction to a baseline MLP ($\hat{u} = \text{MLP} + \Delta u_{\text{Attn}}$) we where able to further improve the performance of the baseline model. In particular, evaluation on a benchmark set of Volterra problems—spanning 1D linear and non-linear VIDEs, coupled systems, and 2D viscoelastic PDE-IDEs—showed that C-PINN consistently outperforms pointwise MLP and RISN baselines, achieving up to an order of magnitude improvement in Mean Absolute Error (MAE).
+Furthermore, by integrating cross-attention as a global residual correction to a baseline MLP ($\hat{u} = \text{MLP} + \Delta u_{\text{Attn}}$), we were able to further improve the performance of the baseline model. Evaluation on a benchmark set of Volterra problems—spanning 1D linear and non-linear VIDEs, coupled systems, and 2D viscoelastic PDE-IDEs—showed that C-PINN outperforms the pointwise MLP and RISN baselines on all 1D problems, reducing the Mean Absolute Error (MAE) by up to an order of magnitude, while on the 2D viscoelastic problem the specialized RISN baseline remains more accurate.
 \end{abstract}
 
 \IEEEkeywords
